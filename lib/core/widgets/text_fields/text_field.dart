@@ -1,31 +1,31 @@
-import 'package:doctor_booking/core/constants/sizes.dart';
-import 'package:doctor_booking/core/constants/styles.dart';
-import 'package:doctor_booking/core/helpers/validator.dart';
+import 'package:doctor_booking/core/utils/constants/sizes.dart';
+import 'package:doctor_booking/core/utils/constants/styles.dart';
+import 'package:doctor_booking/core/utils/helpers/responsive_helpers/size_helper_extensions.dart';
+import 'package:doctor_booking/core/utils/helpers/validator.dart';
 import 'package:flutter/material.dart';
 
-
 class CustomTextField extends StatelessWidget with Validator {
-  const CustomTextField(
-      {super.key,
-      this.hint,
-      this.label,
-      this.controller,
-      this.prefix,
-      this.keyboardType = TextInputType.text,
-      this.fillColor,
-      this.suffix,
-      this.maxLines = 1,
-      this.minLines = 1,
-      this.onTap,
-      this.readOnly = false,
-      this.border,
-      this.contentPadding,
-      this.expands = false,
-      this.onChanged});
+  const CustomTextField({
+    super.key,
+    this.hint,
+    this.label,
+    this.controller,
+    this.prefixIcon,
+    this.keyboardType = TextInputType.text,
+    this.fillColor,
+    this.suffix,
+    this.maxLines = 1,
+    this.minLines = 1,
+    this.onTap,
+    this.readOnly = false,
+    this.contentPadding,
+    this.expands = false,
+    this.onChanged,
+  });
   final String? hint;
   final String? label;
   final TextEditingController? controller;
-  final Widget? prefix;
+  final IconData? prefixIcon;
   final Widget? suffix;
   final TextInputType keyboardType;
   final Color? fillColor;
@@ -33,7 +33,6 @@ class CustomTextField extends StatelessWidget with Validator {
   final int? minLines;
   final bool readOnly;
   final VoidCallback? onTap;
-  final InputBorder? border;
   final EdgeInsetsGeometry? contentPadding;
   final bool expands;
   final Function(String)? onChanged;
@@ -47,32 +46,24 @@ class CustomTextField extends StatelessWidget with Validator {
       onTap: onTap,
       readOnly: readOnly,
       onChanged: onChanged,
-      onTapOutside: (event) {
-        // FocusScope.of(context).unfocus();
-      },
-      style: const TextStyle(fontSize: 16),
-
+      style: TextStyles.regular14,
       decoration: InputDecoration(
         hintText: hint,
-        prefixIcon: prefix,
+        prefixIcon: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.r),
+          child: Icon(prefixIcon,size: 24.r),
+        ),
         suffixIcon: suffix,
         fillColor: fillColor,
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        border: border,
         hintStyle: TextStyles.medium14.copyWith(color: Colors.grey),
-        enabledBorder: border,
-        focusedBorder: border,
-        contentPadding: contentPadding ??
-            const EdgeInsets.symmetric(
-              horizontal: AppSizes.md,
-              vertical: AppSizes.md,
-            ),
+        contentPadding: contentPadding ?? EdgeInsets.all(AppSizes.md.r),
       ),
       validator: (value) {
         if (keyboardType == TextInputType.emailAddress) {
           return validateEmail(value);
         } else {
-          return validateRequiredField(value, null);
+          return validateRequiredField(value, label);
         }
       },
     );

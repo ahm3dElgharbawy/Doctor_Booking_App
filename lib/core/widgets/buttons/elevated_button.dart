@@ -1,5 +1,6 @@
-import 'package:doctor_booking/core/constants/colors.dart';
-import 'package:doctor_booking/core/constants/styles.dart';
+import 'package:doctor_booking/core/utils/constants/colors.dart';
+import 'package:doctor_booking/core/utils/constants/styles.dart';
+import 'package:doctor_booking/core/utils/helpers/responsive_helpers/size_helper_extensions.dart';
 import 'package:flutter/material.dart';
 
 
@@ -30,21 +31,21 @@ class CustomElevatedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: width,
-      height: height ?? 50,
+      height: height ?? 45.h,
       margin: margin,
       child: ElevatedButton(
-        onPressed: onTap,
+        onPressed: isLoading ? null  : onTap,
         style: ElevatedButton.styleFrom(
           backgroundColor: color,
           shape: shape ??
               RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10.r),
               ),
         ),
         child: isLoading
             ? Center(
                 child: SizedBox(
-                  height: 25,
+                  height: 25.h,
                   child: FittedBox(
                     child:
                         CircularProgressIndicator(color: loadingIndicatorColor),
